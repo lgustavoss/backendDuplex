@@ -17,7 +17,7 @@ class Pessoa(models.Model):
     # Tipo de pessoa (Pessoa Física ou Pessoa Jurídica)
     tipo_pessoa = models.CharField(max_length=1, choices=TIPO_PESSOA_CHOICES, null=False, blank=False)
     # CPF ou CNPJ (11 a 18 caracteres)
-    cnpj_cpf = models.CharField(max_length=18)
+    cnpj_cpf = models.CharField(max_length=18, validators=[validar_cnpj_cpf])
     # RG ou IE (50 caracteres no máximo, pode ser nulo)
     rg_ie = models.CharField(max_length=50, null=True, blank=True)
     # Data de nascimento (necessária para Pessoa Física)

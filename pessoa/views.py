@@ -1,11 +1,11 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-
 from .models import Pessoa
-from .serializers import PessoaSerializer
+from .serializers import PessoaSerializer, PessoaListSerializer
 
-
-# Create your views here.
 class PessoaViewSet(viewsets.ModelViewSet):
     queryset = Pessoa.objects.all()
-    serializer_class = PessoaSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PessoaListSerializer
+        return PessoaSerializer
