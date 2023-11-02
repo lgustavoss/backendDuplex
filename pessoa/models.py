@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import EmailValidator
 
-from .validators import validar_telefone, validar_cnpj_cpf
+from .validators import validar_telefone, validar_cnpj_cpf, formatar_cnpj_cpf
 
 
 TIPO_PESSOA_CHOICES = (
@@ -39,3 +39,8 @@ class Pessoa(models.Model):
     data_cadastro = models.DateTimeField(auto_now_add=True)
     # Última alteração (auto_now garante que seja atualizado automaticamente)
     ultima_alteracao = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        # Formate o campo cnpj_cpf com a máscara adequada antes de salvar
+        self.cnpj_cpf = formatar_cnpj_cpf(self.cnpj_cpf)
+        super(Pessoa, self).save(*args, **kwargs)

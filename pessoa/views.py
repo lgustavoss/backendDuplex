@@ -1,12 +1,18 @@
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Pessoa
 from .serializers import PessoaSerializer, PessoaListSerializer
+from .filters import PessoaFilter
+
 
 class PessoaViewSet(viewsets.ModelViewSet):
     queryset = Pessoa.objects.all()
     serializer_class = PessoaSerializer
     pagination_class = PageNumberPagination 
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PessoaFilter
+
 
     def list(self, request, *args, **kwargs):
         # Acesse o valor de 'page_size' na consulta
